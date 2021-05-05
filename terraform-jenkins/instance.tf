@@ -1,12 +1,12 @@
 
 resource "aws_instance" "web" {
-#   count                  = 4
+  #   count                  = 4
   ami                    = var.ami[var.region]
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.ec2.id]
   subnet_id              = aws_subnet.public_subnet.id
   key_name               = var.key_name
-  user_data = <<-EOF
+  user_data              = <<-EOF
                  #!/bin/bash
                   sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
                   sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
@@ -15,6 +15,10 @@ resource "aws_instance" "web" {
                   sudo systemctl daemon-reload
                   sudo systemctl start jenkins
                   sudo systemctl enable jenkins
+                  sudo amazon-linux-extras install docker -y
+                  sudo yum install docker -y
+                  sudo service docker start
+                  sudo usermod -a -G docker ec2-user
               EOF
 
   root_block_device {
