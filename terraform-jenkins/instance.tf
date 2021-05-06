@@ -19,6 +19,13 @@ resource "aws_instance" "web" {
                   sudo yum install docker -y
                   sudo service docker start
                   sudo usermod -a -G docker ec2-user
+                  sudo usermod -a -G docker jenkins
+                  sudo usermod -a -G wheel jenkins
+                  sudo echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+                  sudo yum install git -y
+                  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                  unzip awscliv2.zip
+                  sudo ./aws/install
               EOF
 
   root_block_device {
