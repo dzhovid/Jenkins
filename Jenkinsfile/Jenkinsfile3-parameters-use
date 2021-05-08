@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+    parameters{
+        string(name: "Name", defaultValue: "", description: "Just a string parameter")
+        choice(name: "Last_Name", choices: ['Calik','Kalik', 'Dzhuraev'], description: "Choice parameter")
+    }
+    stages {
+        stage('Name') {
+            steps {
+                echo "First Name is: ${params.Name}"
+            }
+        }
+        stage('Last Name') {
+            steps {
+                echo "Last name is: ${params.Last_Name}"
+            }
+        }
+    }
+}
