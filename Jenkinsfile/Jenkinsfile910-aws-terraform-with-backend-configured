@@ -1,3 +1,5 @@
+//main.tf and backend.tf files are stored in infrastructure folder within Git Repo folder given during setup of pipeline. 
+//Build with Parameters should be performed if want to destroy.
 pipeline {
     agent any
     parameters {
