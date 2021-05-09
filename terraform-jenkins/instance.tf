@@ -26,6 +26,9 @@ resource "aws_instance" "web" {
                   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
                   unzip awscliv2.zip
                   sudo ./aws/install
+                  sudo wget https://releases.hashicorp.com/terraform/0.15.3/terraform_0.15.3_linux_amd64.zip
+                  sudo unzip terraform_0.15.3_linux_amd64.zip
+                  sudo mv terraform /usr/bin/
               EOF
 
   root_block_device {
