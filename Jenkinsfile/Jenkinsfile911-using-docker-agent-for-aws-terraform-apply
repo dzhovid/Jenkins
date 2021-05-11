@@ -1,3 +1,6 @@
+//First, install Docker. Docker API, and Docker Pipeline plugins from Plugin Manager, to be able to use agent.
+//Second, be sure you have needed environment variables = AWS credentials added form Global Credentials
+
 pipeline {
     agent {
         docker {
