@@ -1,9 +1,7 @@
 //java-maven-app folder containing the source code - java - is located in Jenkins folder within Github repo
 //Dockerfile is also included in Jenkins folder - working folder.
 pipeline {
-    agent {
-        label 'mac'
-    }
+    agent any
     tools{
         maven 'maven-v3.8.1' // get it from global tool
     }
