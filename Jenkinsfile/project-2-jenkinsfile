@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    tools{
+        maven 'maven-v3.8.1' // get it from global tool
+    }
+    stages {
+        stage('passed') {
+            steps {
+                script{
+                    echo 'building application'
+                }
+            }
+        }
+        stage('Build image') {
+            steps {
+                script{
+                    echo 'building docker image'
+                    sh 'cd train-schedule/'
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+                        sh 'docker build -t dzhovid/train-schedule:v2 .'
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh 'docker push dzhovid/train-schedule:v2'
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script{
+                    echo 'deploying application ...'
+                }
+            }
+        }
+
+    }
+}
