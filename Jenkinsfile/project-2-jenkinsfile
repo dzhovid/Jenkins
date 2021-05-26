@@ -1,3 +1,7 @@
+//Update the Git Hub repo folder. It should have the following items:
+//train-schedule folder with Dockerfile in it
+//terraform folder with all needed files to spin up EC2 instance(s)
+
 pipeline {
     agent any
     tools{
@@ -23,6 +27,7 @@ pipeline {
                 }
             }
         }
+        //Update terraform folder name and the command as needed.
         stage('Terraform Init') {
             steps {
                 sh '''
