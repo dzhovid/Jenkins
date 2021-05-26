@@ -3,14 +3,11 @@ pipeline {
     tools{
         maven 'maven-v3.8.1' // get it from global tool
     }
+    environment {
+        AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+    
     stages {
-        stage('passed') {
-            steps {
-                script{
-                    echo 'building application'
-                }
-            }
-        }
         stage('Build image') {
             steps {
                 script{
@@ -23,6 +20,24 @@ pipeline {
                 }
             }
         }
+        stage('Terraform Init') {
+            steps {
+                sh '''
+                   cd Infrastructure/
+                   terraform init
+
+                '''
+            }
+        }
+        stage('Terraform Apply (can be parametrized for Prod, Dev, and QA)') {
+            steps {
+                sh """
+                   cd Infrastructure/
+                   terraform apply -auto-approve
+                """
+            }
+        }
+
         stage('SSH and Deploy') {
             steps {
                 script{
