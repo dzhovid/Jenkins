@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script{
                     echo 'deploying application ...'
-                    sh 'ssh -T -o "StrictHostKeyChecking no" ec2-user@54.221.153.214'
+                    sh 'ssh -T -o "StrictHostKeyChecking no" 54.221.153.214 -yes'
                     sh 'sudo docker run -d -p 8095:8080 dzhovid/train-schedule:v2'
                 }
             }
