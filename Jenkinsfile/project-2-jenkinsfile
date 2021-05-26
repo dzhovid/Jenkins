@@ -28,7 +28,7 @@ pipeline {
                 script{
                     echo 'deploying application ...'
                     sh """
-                          ssh -T -o "StrictHostKeyChecking=no" 54.221.153.214 <<'EOT'
+                          ssh -T -o "StrictHostKeyChecking=no" 54.221.153.214 -yes <<'EOT'
                           touch hellofromjenkins.txt
                           exit
                           EOT"""
