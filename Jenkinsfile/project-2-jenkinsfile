@@ -15,9 +15,8 @@ pipeline {
             steps {
                 script{
                     echo 'building docker image'
-                    sh 'cd train-schedule/'
                     withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASS', usernameVariable: 'USER')]){
-                        sh 'docker build -t dzhovid/train-schedule:v2 .'
+                        sh 'cd train-schedule/ && docker build -t dzhovid/train-schedule:v2 .'
                         sh "echo $PASS | docker login -u $USER --password-stdin"
                         sh 'docker push dzhovid/train-schedule:v2'
                     }
