@@ -7,7 +7,7 @@ pipeline {
     parameters{
         string(name: "DockerHub-User", defaultValue: "", description: "Please type your Docker Hub username. It will be used to tag the built image.")
         string(name: "Image-Name", defaultValue: "", description: "Please type a name for the image you want to build and push to your repo.")
-        string(name: "Version", defaultValue: "", description: "Please type the version you want to build and push to your repo. Ex: 'v1'")
+        //string(name: "Version", defaultValue: "", description: "Please type the version you want to build and push to your repo. Ex: 'v1'")
         choice(name: "Environment", choices: ['Prod','Dev','QA'], description: "Please select the environment you want to spin up an instance for.")
     }
     //Update AWS credentials as needed
@@ -23,9 +23,9 @@ pipeline {
                 script{
                     echo 'building docker image'
                     withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASS', usernameVariable: 'USER')]){
-                        sh 'cd train-schedule/ && docker build -t ${params.DockerHub-User}/${params.Image-Name}:${params.Version} .'
+                        sh 'cd train-schedule/ && docker build -t ${params.DockerHub-User}/${params.Image-Name}:v4 .'
                         sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh 'docker push ${params.DockerHub-User}/${params.Image-Name}:${params.Version}'
+                        sh 'docker push ${params.DockerHub-User}/${params.Image-Name}:v4'
                     }
                 }
             }
