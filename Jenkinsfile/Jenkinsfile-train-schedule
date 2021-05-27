@@ -23,9 +23,9 @@ pipeline {
                 script{
                     echo 'building docker image'
                     withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASS', usernameVariable: 'USER')]){
-                        sh 'cd train-schedule/ && docker build -t ${params.DockerHubUser}/${params.ImageName}:v4 .'
+                        sh "cd train-schedule/ && docker build -t ${params.DockerHubUser}/${params.ImageName}:v4 ."
                         sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh 'docker push ${params.DockerHubUser}/${params.ImageName}:v4'
+                        sh "docker push ${params.DockerHubUser}/${params.ImageName}:v4"
                     }
                 }
             }
