@@ -8,7 +8,7 @@ pipeline {
         string(name: "DockerHubUser", defaultValue: "", description: "Please type your Docker Hub username. It will be used to tag the built image.")
         string(name: "ImageName", defaultValue: "", description: "Please type a name for the image you want to build and push to your repo.")
         string(name: "Version", defaultValue: "", description: "Please type the version you want to build and push to your repo. Ex: 'v1'")
-        //choice(name: "Environment", choices: ['Prod','Dev','QA'], description: "Please select the environment you want to spin up an instance for.")
+        choice(name: "Environment", choices: ['Prod','Dev','QA'], description: "Please select the environment you want to spin up an instance for.")
     }
     //Update AWS credentials as needed
     environment {
@@ -34,7 +34,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 sh '''
-                   cd Infrastructure/
+                   cd terraform/ec2-creation/
                    terraform init
 
                 '''
@@ -44,8 +44,8 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 sh """
-                   cd Infrastructure/
-                   terraform apply -auto-approve
+                   cd terraform/ec2-creation/
+                   terraform apply -var-file=${params.Environment}.tfvars -auto-approve
                 """
             }
         }
