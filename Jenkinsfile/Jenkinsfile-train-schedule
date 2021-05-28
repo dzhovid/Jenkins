@@ -40,7 +40,7 @@ pipeline {
                 '''
             }
         }
-        //terraform apply -var-file=${params.Environment}.tfvars -auto-approve
+        //make sure the tfvars file exists in terraform folder.
         stage('Terraform Apply') {
             steps {
                 sh """
